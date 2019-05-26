@@ -14,9 +14,7 @@ RUN apt-get update && \
             zip \
             apache2 \
             cron && \
-    touch /var/log/cron.log && \
-    curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
-    apt-get install -y nodejs
+    touch /var/log/cron.log
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
@@ -128,6 +126,10 @@ RUN apt-get update && \
         php${PHP_VER}-redis \
         php${PHP_VER}-soap \
         php${PHP_VER}-solr
+
+#install node npm
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get install -y nodejs
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
